@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Seru Bangun Ruang - Kelas II SD/MI</title>
+    <!-- Google Fonts untuk Tampilan Ramah Anak -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --purple: #9b5de5;
+            --dark: #2d3436;
+            --light: #f7f9fc;
+            --success: #2ecc71;
+            --shadow: 0 8px 25px rgba(0,0,0,0.1);
+            --radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #a8ede0 0%, #fed6e3 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 92vh;
+            position: relative;
+        }
+
+        /* Header / Navbar */
+        header {
+            background: linear-gradient(135deg, var(--primary), #ff8e53);
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px dashed var(--accent);
+        }
+
+        header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        .user-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Halaman Container */
+        .page {
+            display: none;
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tombol & Aksi */
+        .btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #3db5ad;
+            transition: all 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #3db5ad;
+        }
+
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #3db5ad;
+        }
+
+        .btn-primary { background: var(--primary); box-shadow: 0 5px 0 #e05656; }
+        .btn-primary:hover { box-shadow: 0 7px 0 #e05656; }
+        .btn-primary:active { box-shadow: 0 2px 0 #e05656; }
+
+        .btn-purple { background: var(--purple); box-shadow: 0 5px 0 #7b38bc; }
+        .btn-purple:hover { box-shadow: 0 7px 0 #7b38bc; }
+        .btn-purple:active { box-shadow: 0 2px 0 #7b38bc; }
+
+        /* Halaman Login */
+        #login-page {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #fff 60%, #e3fdf5 100%);
+        }
+
+        .mascot-box {
+            font-size: 4.5rem;
+            animation: bounce 2s infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-8px);}
+        }
+
+        .login-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 420px;
+            border: 4px solid var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 3px solid #dfe6e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Dashboard Menu Utama */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--secondary), #2bc4b9);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .menu-card {
+            background: white;
+            border: 3px solid #f1f2f6;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .menu-icon {
+            font-size: 3rem;
+            margin-bottom: 5px;
+        }
+
+        .menu-card h3 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+
+        .menu-card p {
+            font-size: 0.85rem;
+            color: #636e72;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #dfe6e9;
+            border-radius: 10px;
+            height: 15px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            background: var(--success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* Halaman Materi / Slide Card */
+        .material-slide {
+            background: white;
+            border: 3px solid #dfe6e9;
+            border-radius: var(--radius);
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .slide-title {
+            font-family: 'Fredoka One', cursive;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .slide-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .slide-image-box {
+            background: #f0f3f8;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 3px dashed var(--secondary);
+        }
+
+        .slide-image-box img, .big-emoji-img {
+            max-width: 100%;
+            height: 160px;
+            object-fit: contain;
+        }
+
+        .emoji-art {
+            font-size: 6rem;
+            line-height: 1;
+            margin: 10px 0;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+        }
+
+        .slide-text p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .features-list {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            margin-top: 10px;
+        }
+
+        .features-list li {
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #f1f2f6;
+        }
+
+        /* Aktivitas Belajar / Mini Games */
+        .activity-card {
+            background: #f8f9fa;
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .option-item {
+            background: white;
+            border: 3px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 700;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary);
+            background: #e6fffa;
+            transform: scale(1.03);
+        }
+
+        .option-item.correct {
+            background: #d4edda !important;
+            border-color: var(--success) !important;
+            color: #155724;
+        }
+
+        .option-item.wrong {
+            background: #f8d7da !important;
+            border-color: var(--primary) !important;
+            color: #721c24;
+        }
+
+        /* Game Ice Breaking Style */
+        .ice-game-box {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+
+        .game-canvas-area {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            border: 3px dashed var(--primary);
+            position: relative;
+        }
+
+        /* Kuis */
+        .quiz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 3px solid #e2e8f0;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quiz-option {
+            background: #f1f5f9;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: #e2e8f0;
+            border-color: var(--secondary);
+        }
+
+        .quiz-option.selected {
+            background: #e0f2fe;
+            border-color: var(--secondary);
+            color: #0369a1;
+        }
+
+        /* Feedback Popup */
+        .feedback-banner {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+        .feedback-success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .feedback-error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+
+        /* Hasil & Tabel */
+        .result-box {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 4px solid var(--accent);
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .stat-card h4 { font-size: 0.9rem; color: #64748b; }
+        .stat-card p { font-size: 1.8rem; font-family: 'Fredoka One', cursive; color: var(--primary); }
+
+        /* Umum */
+        .text-center { text-align: center; }
+        .mb-15 { margin-bottom: 15px; }
+        .mt-15 { margin-top: 15px; }
+        
+        /* Grid gambar melimpah untuk anak-anak */
+        .image-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .gallery-item {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
+        .gallery-item span { font-size: 2.5rem; display: block; margin-bottom: 5px; }
+        .gallery-item p { font-size: 0.85rem; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <header>
+        <h1>🚀 Ruang Ceria SD/MI</h1>
+        <div class="user-badge" id="header-user">
+            <span>👤</span> <span id="display-name">Siswa</span>
+        </div>
+    </header>
+
+    <!-- 1. HALAMAN LOGIN -->
+    <div id="page-login" class="page active">
+        <div class="login-card" style="margin: auto; text-align: center;">
+            <div class="mascot-box">🦊✨</div>
+            <h2 style="font-family: 'Fredoka One'; color: var(--primary); margin-bottom: 5px;">Halo Teman-Teman!</h2>
+            <p style="color: #636e72; margin-bottom: 20px; font-size: 0.95rem;">Yuk masukkan nama dan kelasmu sebelum mulai berpetualang!</p>
+            
+            <div class="form-group">
+                <label>Nama Lengkapmu:</label>
+                <input type="text" id="input-name" placeholder="Contoh: Budi Santoso">
+            </div>
+            
+            <div class="form-group">
+                <label>Kelas:</label>
+                <select id="input-class">
+                    <option value="Kelas II A">Kelas II A</option>
+                    <option value="Kelas II B">Kelas II B</option>
+                    <option value="Kelas II C">Kelas II C</option>
+                    <option value="Kelas II D">Kelas II D</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="handleLogin()">Mulai Belajar! 🎒</button>
+        </div>
+    </div>
+
+    <!-- 2. DASHBOARD / MENU UTAMA -->
+    <div id="page-dashboard" class="page">
+        <div class="welcome-banner">
+            <div>
+                <h2>Halo, <span id="welcome-name">Siswa</span>! 👋</h2>
+                <p>Siap menjelajahi dunia Bangun Ruang hari ini?</p>
+            </div>
+            <div style="font-size: 3.5rem;">🌟</div>
+        </div>
+
+        <div style="background: white; padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">
+                <span>Progress Belajarmu</span>
+                <span id="progress-text">0% Selesai</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="main-progress"></div>
+            </div>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-card" onclick="goToPage('page-material', 0)">
+                <div class="menu-icon">📚</div>
+                <h3>Materi Pelajaran</h3>
+                <p>Kenali benda & bangun ruang</p>
+            </div>
+            <div class="menu-card" onclick="goToPage('page-activity')">
+                <div class="menu-icon">🧩</div>
+                <h3>Aktivitas Seru</h3>
+                <p>Latihan pasang & kelompokkan</p>
+            </div>
+            <div class="menu-card" onclick="goToPage('page-ice-breaking')">
+                <div class="menu-icon">🎮</div>
+                <h3>Ice Breaking Game</h3>
+                <p>Bermain tebak bentuk & tangkap es krim!</p>
+            </div>
+            <div class="menu-card" onclick="goToPage('page-quiz')">
+                <div class="menu-icon">⭐</div>
+                <h3>Kuis Pintar</h3>
+                <p>Uji kemampuanmu di sini</p>
+            </div>
+            <div class="menu-card" onclick="goToPage('page-result')">
+                <div class="menu-icon">🏆</div>
+                <h3>Hasil Belajar</h3>
+                <p>Lihat nilai dan skormu</p>
+            </div>
+            <div class="menu-card" onclick="goToPage('page-guide')">
+                <div class="menu-icon">📖</div>
+                <h3>Petunjuk</h3>
+                <p>Cara pakai aplikasi</p>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <button class="btn" style="background: #e74c3c; box-shadow: 0 5px 0 #c0392b;" onclick="logout()">Keluar Akun 🚪</button>
+        </div>
+    </div>
+
+    <!-- 3. HALAMAN MATERI (MULTI-SLIDE BERGAMBAR MELIMPAH) -->
+    <div id="page-material" class="page">
+        <div class="material-slide" id="slide-container">
+            <!-- Konten slide akan di-render dinamis oleh JavaScript -->
+        </div>
+        <div class="navigation-buttons">
+            <button class="btn" onclick="prevSlide()">⬅️ Sebelumnya</button>
+            <button class="btn btn-purple" onclick="goToPage('page-dashboard')">Menu Utama 🏠</button>
+            <button class="btn btn-primary" onclick="nextSlide()">Berikutnya ➡️</button>
+        </div>
+    </div>
+
+    <!-- 4. HALAMAN AKTIVITAS BELAJAR -->
+    <div id="page-activity" class="page">
+        <h2 style="font-family: 'Fredoka One'; color: var(--primary); margin-bottom: 15px;">🧩 Aktivitas Seru Bangun Ruang</h2>
+        <p style="margin-bottom: 15px; color: #636e72;">Ayo asah kemampuanmu dengan menjawab tantangan di bawah ini!</p>
+
+        <!-- Aktivitas 1 -->
+        <div class="activity-card">
+            <h3>1. Tantangan Pengelompokan Benda</h3>
+            <p>Manakah benda di bawah ini yang berbentuk <b>KUBUS</b> seperti kotak rubik atau dadu?</p>
+            <div class="image-gallery-grid">
+                <div class="gallery-item" onclick="checkActivity(this, true)">
+                    <span>🎲</span>
+                    <p>Dadu Mainan</p>
+                </div>
+                <div class="gallery-item" onclick="checkActivity(this, false)">
+                    <span>🥫</span>
+                    <p>Kaleng Susu</p>
+                </div>
+                <div class="gallery-item" onclick="checkActivity(this, false)">
+                    <span>⚽</span>
+                    <p>Bola Sepak</p>
+                </div>
+            </div>
+            <div class="feedback-banner" id="feedback-act1"></div>
+        </div>
+
+        <!-- Aktivitas 2 -->
+        <div class="activity-card">
+            <h3>2. Tantangan Sifat Bangun Ruang</h3>
+            <p>Berapa jumlah sisi yang dimiliki oleh bangun ruang <b>Tabung</b>?</p>
+            <div class="options-grid">
+                <div class="option-item" onclick="checkActivity2(this, false)">2 Sisi</div>
+                <div class="option-item" onclick="checkActivity2(this, true)">3 Sisi (Atas, Bawah, Lengkung)</div>
+                <div class="option-item" onclick="checkActivity2(this, false)">6 Sisi</div>
+            </div>
+            <div class="feedback-banner" id="feedback-act2"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn btn-purple" onclick="goToPage('page-dashboard')">Selesai & Kembali ke Menu 🏠</button>
+        </div>
+    </div>
+
+    <!-- 5. HALAMAN ICE BREAKING GAME -->
+    <div id="page-ice-breaking" class="page">
+        <div class="ice-game-box">
+            <h2 style="font-family: 'Fredoka One'; font-size: 1.8rem; margin-bottom: 5px;">🎮 Ice Breaking: Tebak Bentuk & Tangkap Es Krim!</h2>
+            <p>Biar tidak jenuh, yuk main tebak bentuk nyata di sekitar kita!</p>
+            
+            <div class="game-canvas-area" id="game-area">
+                <div id="game-question-box">
+                    <div style="font-size: 5rem; margin-bottom: 10px;" id="game-emoji">🍦</div>
+                    <h3 id="game-title" style="font-family: 'Fredoka One'; color: var(--primary); font-size: 1.4rem;">Cone Es Krim Lezat</h3>
+                    <p id="game-desc" style="margin: 10px 0; color: #4a5568;">Benda apa yang bentuknya menyerupai makanan ini?</p>
+                </div>
+                <div class="options-grid" id="game-options" style="width: 100%; max-width: 500px;">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+            <div id="game-score-display" style="font-weight: 700; font-size: 1.1rem; color: #2d3436; margin-top: 10px;">Skor Game: <span id="ice-score">0</span> 🎯</div>
+            <div style="margin-top: 15px;">
+                <button class="btn btn-primary" onclick="nextGameRound()">Soal Berikutnya 🔄</button>
+                <button class="btn btn-purple" onclick="goToPage('page-dashboard')">Kembali ke Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. HALAMAN KUIS -->
+    <div id="page-quiz" class="page">
+        <h2 style="font-family: 'Fredoka One'; color: var(--primary); margin-bottom: 10px;">⭐ Kuis Pintar Bangun Ruang</h2>
+        <p style="color: #636e72; margin-bottom: 15px;">Jawab 5 pertanyaan pilihan ganda dengan teliti ya!</p>
+
+        <div class="quiz-card" id="quiz-container">
+            <!-- Di-render oleh JS -->
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <button class="btn" id="quiz-prev-btn" onclick="prevQuizQuestion()" style="display:none;">⬅️ Sebelumnya</button>
+            <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuizQuestion()">Selanjutnya ➡️</button>
+        </div>
+    </div>
+
+    <!-- 7. HALAMAN HASIL BELAJAR -->
+    <div id="page-result" class="page">
+        <div class="result-box">
+            <div style="font-size: 4rem; margin-bottom: 10px;">🏆</div>
+            <h2 style="font-family: 'Fredoka One'; color: var(--primary); font-size: 1.8rem;">Hasil Belajar Kamu</h2>
+            <p id="result-name-class" style="color: #636e72; font-weight: 700; margin-top: 5px;"></p>
+
+            <div class="result-stats">
+                <div class="stat-card">
+                    <h4>Nilai Akhir</h4>
+                    <p id="res-score">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Persentase</h4>
+                    <p id="res-percent">0%</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Jawaban Benar</h4>
+                    <p id="res-correct" style="color: var(--success);">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Jawaban Salah</h4>
+                    <p id="res-wrong" style="color: var(--primary);">0</p>
+                </div>
+            </div>
+
+            <div id="result-message" style="font-weight: 700; font-size: 1.1rem; margin-bottom: 20px; color: #2d3436;"></div>
+
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+                <button class="btn btn-purple" onclick="goToPage('page-dashboard')">Kembali ke Menu 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. HALAMAN PETUNJUK -->
+    <div id="page-guide" class="page">
+        <h2 style="font-family: 'Fredoka One'; color: var(--primary); margin-bottom: 15px;">📖 Petunjuk Penggunaan Media</h2>
+        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0; line-height: 1.8;">
+            <ol style="padding-left: 20px; font-weight: 700; color: #4a5568;">
+                <li>Masukkan nama lengkap dan pilih kelasmu pada halaman awal.</li>
+                <li>Pilih menu <b>Materi Pelajaran</b> untuk membaca dan mengamati berbagai bangun ruang beserta contoh bendanya yang sangat dekat dengan kehidupan sehari-hari.</li>
+                <li>Kerjakan latihan pada menu <b>Aktivitas Seru</b> untuk menguji pemahaman awalmu.</li>
+                <li>Gunakan menu <b>Ice Breaking Game</b> agar belajarmu tidak jenuh dan semakin asyik!</li>
+                <li>Kerjakan <b>Kuis Pintar</b> dengan teliti untuk mendapatkan nilai terbaik.</li>
+                <li>Cek hasil belajarmu di menu <b>Hasil Belajar</b>. Selamat belajar! 🎉</li>
+            </ol>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn btn-purple" onclick="goToPage('page-dashboard')">Kembali ke Menu 🏠</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* --- DATA SISWA & STATE --- */
+    let userData = {
+        name: localStorage.getItem('bruang_name') || '',
+        className: localStorage.getItem('bruang_class') || 'Kelas II A',
+        quizScore: parseInt(localStorage.getItem('bruang_score')) || 0,
+        quizCorrect: parseInt(localStorage.getItem('bruang_correct')) || 0,
+        quizWrong: parseInt(localStorage.getItem('bruang_wrong')) || 0,
+        quizPercent: parseInt(localStorage.getItem('bruang_percent')) || 0,
+        completedSlides: JSON.parse(localStorage.getItem('bruang_slides')) || []
+    };
+
+    // Cek Login Saat Muat Halaman
+    window.addEventListener('DOMContentLoaded', () => {
+        if(userData.name) {
+            document.getElementById('display-name').innerText = userData.name;
+            document.getElementById('welcome-name').innerText = userData.name;
+            goToPage('page-dashboard');
+            updateProgress();
+        } else {
+            goToPage('page-login');
+        }
+    });
+
+    function handleLogin() {
+        const nameInput = document.getElementById('input-name').value.trim();
+        const classInput = document.getElementById('input-class').value;
+        if(!nameInput) {
+            alert('Mohon masukkan nama lengkapmu terlebih dahulu ya!');
+            return;
+        }
+        userData.name = nameInput;
+        userData.className = classInput;
+        localStorage.setItem('bruang_name', userData.name);
+        localStorage.setItem('bruang_class', userData.className);
+
+        document.getElementById('display-name').innerText = userData.name;
+        document.getElementById('welcome-name').innerText = userData.name;
+        goToPage('page-dashboard');
+        updateProgress();
+    }
+
+    function logout() {
+        if(confirm('Apakah kamu yakin ingin keluar akun?')) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+
+    function goToPage(pageId, slideIndex = null) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+
+        if(pageId === 'page-material') {
+            if(slideIndex !== null) currentSlide = slideIndex;
+            renderSlide();
+        } else if(pageId === 'page-quiz') {
+            renderQuiz();
+        } else if(pageId === 'page-result') {
+            loadResultData();
+        } else if(pageId === 'page-ice-breaking') {
+            initGameRound();
+        }
+        updateProgress();
+    }
+
+    /* --- DATA MATERI (DENGAN ILUSTRASI GAMBAR & EMOJI KAYA) --- */
+    const slides = [
+        {
+            title: "1. Apa itu Benda Ruang & Bangun Ruang?",
+            emoji: "📦🎁",
+            text: "Benda ruang adalah benda nyata yang memiliki volume atau ruang di dalamnya sehingga dapat diisi (contoh: kotak kado, lemari, ember). Sedangkan <b>Bangun Ruang</b> adalah bentuk matematika dari benda ruang tersebut yang memiliki panjang, lebar, dan tinggi.",
+            example: "Contoh: Kotak kado mainan, tempat pensil, dan lemari pakaian di kamar tidurmu.",
+            list: ["Memiliki ruang / volume di dalam", "Dapat diisi air atau benda lain", "Memiliki permukaan lebih dari satu"]
+        },
+        {
+            title: "2. Perbedaan Bangun Datar dan Bangun Ruang",
+            emoji: "📄 vs 📦",
+            text: "Anak-anak hebat, tahukah kamu perbedaannya? <b>Bangun datar</b> seperti kertas gambar hanya memiliki dua sisi (panjang dan lebar) dan bersifat rata/datar. Sebaliknya, <b>Bangun ruang</b> memiliki tiga ukuran (panjang, lebar, dan tinggi) serta memiliki lebih dari satu permukaan ruang.",
+            example: "Contoh Bangun Datar: Kertas HVS, lantai ubin persegi. Contoh Bangun Ruang: Kotak sepatu, bola basket.",
+            list: ["Bangun Datar: Hanya permukaan rata (2D)", "Bangun Ruang: Memiliki ruang dan ketebalan (3D)"]
+        },
+        {
+            title: "3. Mengenal Sisi, Rusuk, dan Titik Sudut",
+            emoji: "📐✨",
+            text: "Sebelum kenal jenisnya, yuk pahami bagian-bagian penting bangun ruang:\n• <b>Sisi</b> adalah bidang permukaan yang membatasi bangun ruang.\n• <b>Rusuk</b> adalah garis pertemuan antara dua sisi.\n• <b>Titik Sudut</b> adalah bagian pojok tempat bertemunya beberapa rusuk.",
+            example: "Bayangkan sebuah kardus mi instan: permukaannya adalah sisi, garis tepinya adalah rusuk, dan pojoknya adalah titik sudut!",
+            list: ["Sisi = Permukaan datar / lengkung", "Rusuk = Garis tepi pertemuan sisi", "Titik Sudut = Pojok lancip pertemuan rusuk"]
+        },
+        {
+            title: "4. Kubus dan Karakteristiknya",
+            emoji: "🎲",
+            text: "<b>Kubus</b> adalah bangun ruang yang bentuknya seperti dadu permainan atau rubik mainan. Semua sisi kubus memiliki ukuran panjang yang persis sama loh!",
+            example: "Contoh di sekitar: Dadu angka, kotak rubik, dan kado berbentuk kubus.",
+            features: ["Memiliki 6 Sisi berbentuk persegi yang sama besar", "Memiliki 12 Rusuk yang sama panjang", "Memiliki 8 Titik Sudut"]
+        },
+        {
+            title: "5. Balok dan Karakteristiknya",
+            emoji: "📦",
+            text: "<b>Balok</b> mirip dengan kubus, tetapi sisi-sisi berhadapannya berbentuk persegi panjang. Balok sering kita temui pada kotak sepatu atau buku tulis tebal.",
+            example: "Contoh di sekitar: Kotak sepatu, lemari es, buku tulis, dan batu bata.",
+            features: ["Memiliki 6 Sisi (sisi berhadapan sama luas)", "Memiliki 12 Rusuk", "Memiliki 8 Titik Sudut"]
+        },
+        {
+            title: "6. Bola dan Karakteristiknya",
+            emoji: "⚽",
+            text: "<b>Bola</b> adalah bangun ruang bulat penuh yang sangat menyenangkan. Bola tidak memiliki rusuk ataupun titik sudut karena permukaannya meluncur mulus ke segala arah!",
+            example: "Contoh di sekitar: Bola sepak, bola basket, kelereng kaca, dan buah semangka bulat.",
+            features: ["Memiliki 1 Sisi lengkung melingkar penuh", "Tidak memiliki Rusuk", "Tidak memiliki Titik Sudut"]
+        },
+        {
+            title: "7. Kerucut (Contoh Spesifik: Cone Es Krim!)",
+            emoji: "🍦",
+            text: "Perhatikan baik-baik! <b>Kerucut</b> adalah bangun ruang yang bentuknya persis seperti <b>cone es krim</b> lezat kesukaanmu atau topi ulang tahun yang meriah. Kerucut memiliki alas lingkaran dan ujung yang runcing di atas.",
+            example: "Contoh di sekitar: <b>Cone es krim</b>, topi ulang tahun, dan pembatas jalan (traffic cone).",
+            features: ["Memiliki 2 Sisi (1 sisi alas lingkaran & 1 sisi selimut lengkung)", "Memiliki 1 Rusuk lengkung", "Memiliki 1 Titik Puncak yang runcing"]
+        },
+        {
+            title: "8. Tabung dan Karakteristiknya",
+            emoji: "🥫",
+            text: "<b>Tabung</b> adalah bangun ruang yang bentuknya mirip kaleng susu atau botol minum. Tabung mempunyai tutup dan alas yang berbentuk lingkaran sama besar.",
+            example: "Contoh di sekitar: Kaleng susu, celengan tabung, pipa air, dan drum minyak.",
+            features: ["Memiliki 3 Sisi (tutup lingkaran, alas lingkaran, dan selimut lengkung)", "Memiliki 2 Rusuk lengkung", "Tidak memiliki Titik Sudut"]
+        }
+    ];
+
+    let currentSlide = 0;
+
+    function renderSlide() {
+        const slide = slides[currentSlide];
+        let featuresHtml = '';
+        if(slide.features) {
+            featuresHtml = `<ul class="features-list">` + slide.features.map(f => `<li>✅ ${f}</li>`).join('') + `</ul>`;
+        } else if(slide.list) {
+            featuresHtml = `<ul class="features-list">` + slide.list.map(l => `<li>💡 ${l}</li>`).join('') + `</ul>`;
+        }
+
+        document.getElementById('slide-container').innerHTML = `
+            <div class="slide-header">
+                <div class="slide-title">${slide.title}</div>
+                <div style="font-weight: 700; color: #636e72;">Slide ${currentSlide + 1} dari${slides.length}</div>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-image-box">
+                    <div class="emoji-art">${slide.emoji}</div>
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #2d3436; margin-top: 5px;">Ilustrasi Bangun Ruang</p>
+                </div>
+                <div class="slide-text">
+                    <p>${slide.text}</p>
+                    <p style="background: #e6fffa; padding: 10px; border-radius: 8px; font-weight: 700; color: #234e52; font-size: 0.95rem;">🛍️ ${slide.example}</p>${featuresHtml}
+                </div>
+            </div>
+        `;
+
+        // Catat progress slide selesai
+        if(!userData.completedSlides.includes(currentSlide)) {
+            userData.completedSlides.push(currentSlide);
+            localStorage.setItem('bruang_slides', JSON.stringify(userData.completedSlides));
+            updateProgress();
+        }
+    }
+
+    function nextSlide() {
+        if(currentSlide < slides.length - 1) {
+            currentSlide++;
+            renderSlide();
+        } else {
+            alert('Hebat! Kamu telah menyelesaikan semua materi bangun ruang. Yuk coba aktivitas dan kuisnya!');
+            goToPage('page-dashboard');
+        }
+    }
+
+    function prevSlide() {
+        if(currentSlide > 0) {
+            currentSlide--;
+            renderSlide();
+        }
+    }
+
+    function updateProgress() {
+        const totalItems = slides.length + 5; // total materi + aktivitas + kuis
+        let doneCount = userData.completedSlides.length;
+        if(userData.quizScore > 0) doneCount += 5; // bonus jika kuis selesai
+        let percent = Math.min(Math.round((doneCount / totalItems) * 100), 100);
+        
+        document.getElementById('main-progress').style.width = percent + '%';
+        document.getElementById('progress-text.innerText = percent + '% Selesai'`;
+        const pEl = document.getElementById('progress-text');
+        if(pEl) pEl.innerText = percent + '% Selesai';
+    }
+
+    /* --- AKTIVITAS INTERAKTIF --- */
+    function checkActivity(element, isCorrect) {
+        const parent = element.parentElement;
+        parent.querySelectorAll('.gallery-item').forEach(el => {
+            el.style.pointerEvents = 'none';
+        });
+        const feedback = document.getElementById('feedback-act1');
+        feedback.style.display = 'block';
+        if(isCorrect) {
+            element.classList.add('correct');
+            feedback.className = 'feedback-banner feedback-success';
+            feedback.innerText = '🎉 Hebat! Dadu mainan benar-benar berbentuk kubus!';
+        } else {
+            element.classList.add('wrong');
+            feedback.className = 'feedback-banner feedback-error';
+            feedback.innerText = '❌ Belum tepat. Dadu mainan lah yang berbentuk kubus!';
+        }
+    }
+
+    function checkActivity2(element, isCorrect) {
+        const parent = element.parentElement;
+        parent.querySelectorAll('.option-item').forEach(el => {
+            el.style.pointerEvents = 'none';
+        });
+        const feedback = document.getElementById('feedback-act2');
+        feedback.style.display = 'block';
+        if(isCorrect) {
+            element.classList.add('correct');
+            feedback.className = 'feedback-banner feedback-success';
+            feedback.innerText = '🎉 Luar biasa! Tabung memiliki 3 sisi (tutup, alas, dan selimut lengkung).';
+        } else {
+            element.classList.add('wrong');
+            feedback.className = 'feedback-banner feedback-error';
+            feedback.innerText = '❌ Kurang tepat. Tabung memiliki 3 sisi ya!';
+        }
+    }
+
+    /* --- ICE BREAKING GAME --- */
+    const gameQuestions = [
+        { emoji: "🍦", title: "Cone Es Krim", desc: "Makanan lezat ini punya bagian bawah runcing menyerupai bangun ruang apa?", options: ["Kerucut", "Bola", "Tabung"], correct: 0 },
+        { emoji: "⚽", title: "Bola Sepak", desc: "Benda bundar untuk bermain di lapangan ini berbentuk bangun ruang apa?", options: ["Kubus", "Bola", "Balok"], correct: 1 },
+        { emoji: "🥫", title: "Kaleng Susu", desc: "Kaleng tempat susu kental manis berbentuk bangun ruang apa?", options: ["Kerucut", "Tabung", "Kubus"], correct: 1 },
+        { emoji: "🎉", title: "Topi Ulang Tahun", desc: "Topi pesta ulang tahun yang lancip di atas menyerupai bentuk...", options: ["Kerucut", "Bola", "Balok"], correct: 0 },
+        { emoji: "📦", title: "Kotak Sepatu", desc: "Tempat menyimpan sepatu baru di rumahmu berbentuk bangun ruang...", options: ["Kubus", "Balok", "Tabung"], correct: 1 }
+    ];
+    let currentGameIdx = 0;
+    let iceScore = 0;
+
+    function initGameRound() {
+        currentGameIdx = Math.floor(Math.random() * gameQuestions.length);
+        renderGameRound();
+    }
+
+    function renderGameRound() {
+        const q = gameQuestions[currentGameIdx];
+        document.getElementById('game-emoji').innerText = q.emoji;
+        document.getElementById('game-title').innerText = q.title;
+        document.getElementById('game-desc').innerText = q.desc;
+        
+        let html = '';
+        q.options.forEach((opt, idx) => {
+            html += `<div class="option-item" onclick="checkGameAnswer(${idx}, ${q.correct})">${opt}</div>`;
+        });
+        document.getElementById('game-options').innerHTML = html;
+        document.getElementById('ice-score').innerText = iceScore;
+    }
+
+    function checkGameAnswer(selected, correct) {
+        const items = document.querySelectorAll('#game-options .option-item');
+        items.forEach((el, idx) => {
+            el.style.pointerEvents = 'none';
+            if(idx === correct) el.classList.add('correct');
+            else if(idx === selected) el.classList.add('wrong');
+        });
+
+        if(selected === correct) {
+            iceScore += 10;
+            document.getElementById('ice-score').innerText = iceScore;
+            alert('🎉 Pintar sekali! Jawabanmu benar.');
+        } else {
+            alert('😊 Coba lagi pada soal berikutnya ya!');
+        }
+    }
+
+    function nextGameRound() {
+        initGameRound();
+    }
+
+    /* --- KUIS 5 SOAL PILIHAN GANDA --- */
+    const quizData = [
+        {
+            question: "1. Benda di bawah ini yang memiliki bentuk serupa dengan bangun ruang **Kubus** adalah...",
+            options: ["A. Kotak sepatu", "B. Dadu mainan", "C. Bola kelereng", "D. Kaleng susu"],
+            answer: 1
+        },
+        {
+            question: "2. Perhatikan ciri-ciri berikut: Memiliki 1 alas lingkaran, 1 sisi lengkung selimut, dan 1 titik puncak runcing. Bangun ruang apakah ini?",
+            options: ["A. Tabung", "B. Bola", "C. Kerucut", "D. Kubus"],
+            answer: 2
+        },
+        {
+            question: "3. Berapakah jumlah sisi yang dimiliki oleh bangun ruang **Bola**?",
+            options: ["A. 1 sisi lengkung", "B. 3 sisi", "C. 6 sisi", "D. Tidak punya sisi"],
+            answer: 0
+        },
+        {
+            question: "4. Ibu menyimpan kue dalam wadah kaleng berbentuk tabung. Bagian sisi alas dan tutup tabung berbentuk...",
+            options: ["A. Segitiga", "B. Persegi panjang", "C. Lingkaran", "D. Persegi"],
+            answer: 2
+        },
+        {
+            question: "5. (HOTS) Kakak membuat kerajinan dari kertas karton berbentuk balok. Ciri utama balok yang membedakannya dari kubus adalah...",
+            options: ["A. Sisi balok berbentuk persegi panjang", "B. Balok tidak punya titik sudut", "C. Balok hanya punya 4 rusuk", "D. Balok berbentuk bundar"],
+            answer: 0
+        }
+    ];
+
+    let currentQuizIdx = 0;
+    let userAnswers = {};
+
+    function renderQuiz() {
+        const q = quizData[currentQuizIdx];
+        let optionsHtml = '';
+        q.options.forEach((opt, idx) => {
+            const isSelected = userAnswers[currentQuizIdx] === idx ? 'selected' : '';
+            optionsHtml += `<div class="quiz-option ${isSelected}" onclick="selectQuizOption(${idx})">${opt}</div>`;
+        });
+
+        document.getElementById('quiz-container').innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); margin-bottom: 8px;">Soal ${currentQuizIdx + 1} dari ${quizData.length}</div>
+            <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 15px; color: #2d3436;">${q.question}</p>
+            <div class="quiz-options">${optionsHtml}</div>
+        `;
+
+        document.getElementById('quiz-prev-btn').style.display = currentQuizIdx > 0 ? 'inline-flex' : 'none';
+        document.getElementById('quiz-next-btn').innerText = currentQuizIdx === quizData.length - 1 ? 'Selesai & Lihat Nilai 🎯' : 'Selanjutnya ➡️';
+    }
+
+    function selectQuizOption(optionIdx) {
+        userAnswers[currentQuizIdx] = optionIdx;
+        renderQuiz();
+    }
+
+    function nextQuizQuestion() {
+        if(userAnswers[currentQuizIdx] === undefined) {
+            alert('Pilih salah satu jawaban terlebih dahulu ya!');
+            return;
+        }
+
+        if(currentQuizIdx < quizData.length - 1) {
+            currentQuizIdx++;
+            renderQuiz();
+        } else {
+            calculateQuizResult();
+        }
+    }
+
+    function prevQuizQuestion() {
+        if(currentQuizIdx > 0) {
+            currentQuizIdx--;
+            renderQuiz();
+        }
+    }
+
+    function calculateQuizResult() {
+        let correctCount = 0;
+        quizData.forEach((q, idx) => {
+            if(userAnswers[idx] === q.answer) {
+                correctCount++;
+            }
+        });
+
+        const wrongCount = quizData.length - correctCount;
+        const score = (correctCount / quizData.length) * 100;
+
+        userData.quizScore = score;
+        userData.quizCorrect = correctCount;
+        userData.quizWrong = wrongCount;
+        userData.quizPercent = score;
+
+        localStorage.setItem('bruang_score', score);
+        localStorage.setItem('bruang_correct', correctCount);
+        localStorage.setItem('bruang_wrong', wrongCount);
+        localStorage.setItem('bruang_percent', score);
+
+        goToPage('page-result');
+    }
+
+    function loadResultData() {
+        document.getElementById('result-name-class').innerText = `${userData.name} (${userData.className})`;
+        document.getElementById('res-score').innerText = userData.quizScore;
+        document.getElementById('res-percent').innerText = userData.quizPercent + '%';
+        document.getElementById('res-correct').innerText = userData.quizCorrect;
+        document.getElementById('res-wrong').innerText = userData.quizWrong;
+
+        const msgEl = document.getElementById('result-message');
+        if(userData.quizScore >= 80) {
+            msgEl.innerHTML = '🎉 Luar Biasa! Kamu sudah sangat pintar menguasai materi Bangun Ruang!';
+        } else if(userData.quizScore >= 60) {
+            msgEl.innerHTML = '👍 Bagus sekali! Tingkatkan lagi belajarmu ya!';
+        } else {
+            msgEl.innerHTML = '💪 Jangan menyerah! Ayo ulangi materi dan kuisnya agar semakin paham.';
+        }
+        updateProgress();
+    }
+
+    function resetQuiz() {
+        currentQuizIdx = 0;
+        userAnswers = {};
+        goToPage('page-quiz');
+    }
+</script>
+
+</body>
+</html>
